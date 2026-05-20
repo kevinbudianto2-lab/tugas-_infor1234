@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Click Speed Game</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+
+    /* BODY */
+    body{
+
+      background:
+      linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+      url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');
+
+      background-size:cover;
+      background-position:center;
+
+      min-height:100vh;
+
+      animation:bgMove 15s infinite alternate;
+
+      color:white;
+
+      overflow-x:hidden;
+
+    }
+
+    /* BACKGROUND ANIMATION */
+    @keyframes bgMove{
+
+      from{
+        background-position:center;
+      }
+
+      to{
+        background-position:top;
+      }
+
+    }
+
+    /* NAVBAR */
+    .navbar{
+
+      background:rgba(0,0,0,0.7);
+
+      backdrop-filter:blur(10px);
+
+      box-shadow:0 0 15px rgba(0,255,255,0.2);
+
+    }
+
+    .navbar-brand{
+
+      color:#00ffe5 !important;
+
+      font-weight:bold;
+
+      font-size:1.5rem;
+
+      text-shadow:0 0 10px cyan;
+
+    }
+
+    .nav-link{
+
+      color:white !important;
+
+      margin-left:10px;
+
+      transition:0.3s;
+
+    }
+
+    .nav-link:hover{
+
+      color:#00ffe5 !important;
+
+      text-shadow:0 0 10px cyan;
+
+    }
+
+    /* GAME BOX */
+    .game-box{
+
+      background:rgba(255,255,255,0.06);
+
+      padding:40px;
+
+      border-radius:25px;
+
+      backdrop-filter:blur(10px);
+
+      box-shadow:0 0 25px rgba(0,255,255,0.2);
+
+      margin-top:120px;
+
+    }
+
+    /* TITLE */
+    h2{
+
+      color:#00ffe5;
+
+      font-size:3rem;
+
+      font-weight:bold;
+
+      text-shadow:0 0 15px #00ffe5;
+
+      animation:glow 1.5s infinite alternate;
+
+    }
+
+    @keyframes glow{
+
+      from{
+        text-shadow:0 0 10px #00ffe5;
+      }
+
+      to{
+        text-shadow:0 0 25px cyan;
+      }
+
+    }
+
+    /* TEXT */
+    p{
+
+      color:#d1d1d1;
+
+      font-size:1.1rem;
+
+    }
+
+    /* BUTTON */
+    .btn{
+
+      border-radius:15px;
+
+      font-weight:bold;
+
+      transition:0.2s;
+
+    }
+
+    .btn:hover{
+
+      transform:translateY(-3px) scale(1.05);
+
+    }
+
+    /* START BUTTON */
+    #startBtn{
+
+      box-shadow:0 0 15px rgba(255,0,0,0.5);
+
+    }
+
+    /* CLICK BUTTON */
+    #clickBtnGame{
+
+      box-shadow:0 0 15px rgba(0,255,0,0.5);
+
+      margin-left:10px;
+
+    }
+
+    /* SCORE */
+    #time,
+    #clicks{
+
+      margin-top:20px;
+
+      font-size:2rem;
+
+      font-weight:bold;
+
+      text-shadow:0 0 10px white;
+
+    }
+
+    /* CLICK EFFECT */
+    .click-effect{
+
+      animation:clickFlash 0.2s;
+
+    }
+
+    @keyframes clickFlash{
+
+      0%{
+        transform:scale(1);
+      }
+
+      50%{
+        transform:scale(1.15);
+      }
+
+      100%{
+        transform:scale(1);
+      }
+
+    }
+
+    /* BUTTON ANIMATION */
+    .btn-anim {
+
+      transition:
+      transform 0.1s ease,
+      box-shadow 0.1s ease;
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+    .btn-anim:active {
+
+      transform: scale(0.85);
+
+      box-shadow:0 0 20px rgba(255,255,255,0.7);
+
+    }
+
+    /* BOUNCE */
+    .bounce {
+
+      animation:bounce 0.2s;
+
+    }
+
+    @keyframes bounce {
+
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+
+    }
+
+    /* RIPPLE */
+    .ripple {
+
+      position:absolute;
+
+      border-radius:50%;
+
+      background:rgba(255,255,255,0.5);
+
+      transform:scale(0);
+
+      animation:ripple-effect 0.6s linear;
+
+    }
+
+    @keyframes ripple-effect {
+
+      to {
+
+        transform:scale(4);
+
+        opacity:0;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+
+    <div class="container-fluid px-4">
+
+      <a class="navbar-brand" href="index.html">
+        🎮 Gaming Bos
+      </a>
+
+      <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
+
+        <span class="navbar-toggler-icon"></span>
+
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              Home
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="profile.html">
+              Game 1
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="about.html">
+              Game 2
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">
+              Contact
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="container">
+
+    <div class="game-box text-center">
+
+      <h2>
+        ⚡ Click Speed Game
+      </h2>
+
+      <p>
+        Klik secepat mungkin dalam 1 menit!
+      </p>
+
+      <!-- BUTTON -->
+      <button
+      id="startBtn"
+      class="btn btn-danger btn-lg btn-anim"
+      onclick="startGame(); ripple(event); animateBtn(this)">
+
+        Start
+
+      </button>
+
+      <button
+      id="clickBtnGame"
+      class="btn btn-success btn-lg btn-anim"
+      onclick="clickBtn(); ripple(event); animateBtn(this)">
+
+        CLICK!
+
+      </button>
+
+      <!-- INFO -->
+      <h3 class="mt-4" id="time">
+        Time: 60
+      </h3>
+
+      <h3 id="clicks">
+        Clicks: 0
+      </h3>
+
+      <!-- BACK -->
+      <a href="index.html"
+      class="btn btn-light mt-4 btn-anim"
+      onclick="ripple(event); animateBtn(this)">
+
+        Back
+
+      </a>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    let time = 5;
+
+    let clicks = 0;
+
+    let timer;
+
+    // START GAME
+    function startGame(){
+
+      time = 60;
+
+      clicks = 0;
+
+      document.getElementById("time").innerHTML =
+      "Time: " + time;
+
+      document.getElementById("clicks").innerHTML =
+      "Clicks: " + clicks;
+
+      clearInterval(timer);
+
+      timer = setInterval(()=>{
+
+        time--;
+
+        document.getElementById("time").innerHTML =
+        "Time: " + time;
+
+        if(time <= 0){
+
+          clearInterval(timer);
+
+          alert(
+            "🎉 Game Over! Total clicks kamu: " + clicks
+          );
+
+        }
+
+      },1000);
+
+    }
+
+    // CLICK BUTTON
+    function clickBtn(){
+
+      if(time > 0){
+
+        clicks++;
+
+        document.getElementById("clicks").innerHTML =
+        "Clicks: " + clicks;
+
+        document.getElementById("clicks")
+        .classList.add("click-effect");
+
+        setTimeout(()=>{
+
+          document.getElementById("clicks")
+          .classList.remove("click-effect");
+
+        },200);
+
+      }
+
+    }
+
+    // BUTTON BOUNCE
+    function animateBtn(btn){
+
+      btn.classList.add("bounce");
+
+      setTimeout(()=>{
+
+        btn.classList.remove("bounce");
+
+      },200);
+
+    }
+
+    // RIPPLE EFFECT
+    function ripple(e){
+
+      let btn = e.currentTarget;
+
+      let circle =
+      document.createElement("span");
+
+      let diameter =
+      Math.max(btn.clientWidth, btn.clientHeight);
+
+      let radius = diameter / 2;
+
+      circle.style.width =
+      circle.style.height =
+      diameter + "px";
+
+      circle.style.left =
+      e.clientX - btn.offsetLeft - radius + "px";
+
+      circle.style.top =
+      e.clientY - btn.offsetTop - radius + "px";
+
+      circle.classList.add("ripple");
+
+      let rippleOld =
+      btn.getElementsByClassName("ripple")[0];
+
+      if(rippleOld){
+
+        rippleOld.remove();
+
+      }
+
+      btn.appendChild(circle);
+
+    }
+
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
